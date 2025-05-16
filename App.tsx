@@ -18,9 +18,7 @@ const RootStack = createNativeStackNavigator({
   initialRouteName: "Combinations",
   screens: {
     Combinations: CombinationsScreen,
-    CombinationDetail: {
-      screen: CombinationDetail,
-    },
+    CombinationDetail: CombinationDetail,
   },
 });
 
