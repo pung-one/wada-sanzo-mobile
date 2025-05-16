@@ -3,6 +3,7 @@ import { colorsWithSlug } from "../../assets/colors";
 import { createCombinationArray } from "../../utils/helper";
 import { StaticScreenProps, useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
+import { CopyFields } from "../../components/CopyFields";
 
 const combinationArray = createCombinationArray(colorsWithSlug);
 
@@ -25,7 +26,9 @@ export function CombinationDetail({ route }: Props) {
         <View
           key={color.hex}
           style={[styles.singleColor, { backgroundColor: color.hex }]}
-        />
+        >
+          <CopyFields colorData={color} />
+        </View>
       ))}
     </View>
   );
