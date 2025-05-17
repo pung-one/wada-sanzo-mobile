@@ -27,11 +27,14 @@ export function ColorScreen() {
 
   return (
     <View style={styles.root}>
+      <Text style={styles.title}>A Dictionary of Color Combinations</Text>
+
       <FlatList
+        style={{ paddingTop: 110 }}
         data={colorsWithSlug}
         keyExtractor={(c) => c.slug}
-        renderItem={({ item }) => (
-          <Pressable onPress={() => console.log(item.cmyk)}>
+        renderItem={({ item, index }) => (
+          <Pressable onPress={() => navigate("ColorDetail", { index: index })}>
             <View style={[styles.colorElement, { backgroundColor: item.hex }]}>
               <Text
                 style={[
@@ -51,7 +54,15 @@ export function ColorScreen() {
 
 const styles = StyleSheet.create({
   root: {
+    position: "relative",
+    flex: 1,
     backgroundColor: "white",
+  },
+  title: {
+    position: "absolute",
+    zIndex: 1,
+    top: 70,
+    left: 20,
   },
   colorElement: {
     flex: 1,
@@ -61,5 +72,6 @@ const styles = StyleSheet.create({
   colorName: {
     paddingTop: 20,
     paddingLeft: 20,
+    fontSize: 16,
   },
 });

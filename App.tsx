@@ -15,11 +15,22 @@ import {
 import { CombinationDetail } from "./src/screens/combinations/CombinationDetail";
 import { ColorScreen } from "./src/screens/colors/ColorScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { ColorDetail } from "./src/screens/colors/ColorDetail";
 
 const BottomTabNavigator = createBottomTabNavigator({
   screens: {
-    Combinations: CombinationsScreen,
-    Colors: ColorScreen,
+    Combinations: {
+      screen: CombinationsScreen,
+      options: {
+        headerShown: false,
+      },
+    },
+    Colors: {
+      screen: ColorScreen,
+      options: {
+        headerShown: false,
+      },
+    },
   },
 });
 
@@ -34,7 +45,7 @@ const RootStack = createNativeStackNavigator({
       },
     },
     CombinationDetail: CombinationDetail,
-    ColorDetail: CombinationDetail,
+    ColorDetail: ColorDetail,
   },
 });
 

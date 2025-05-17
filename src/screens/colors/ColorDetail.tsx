@@ -4,53 +4,46 @@ import { createCombinationArray } from "../../utils/helper";
 import { StaticScreenProps, useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { CopyFields } from "../../components/CopyFields";
+import { CombinationsList } from "../../components/CombinationsList";
 
 const combinationArray = createCombinationArray(colorsWithSlug);
 
 type Props = StaticScreenProps<{
-  id: number;
+  index: number;
 }>;
 
-export function CombinationDetail({ route }: Props) {
+export function ColorDetail({ route }: Props) {
   const [showCopyFields, setShowCopyFields] = useState<boolean>(true);
   const navigation = useNavigation();
 
-  const combiData = combinationArray.find((c) => c.id == route.params.id);
+  const colorObject = colorsWithSlug[route.params.index];
+  const { name, hex, combinations, isBright } = colorObject;
 
   useEffect(() => {
-    navigation.setOptions({
-      title: `Combination #${combiData?.id.toString()}`,
-    });
+    navigation.setOptions({ title: name });
   }, [navigation]);
 
   return (
     <View style={styles.root}>
       <Pressable
-        style={[
-          styles.button,
-          {
-            borderColor: combiData?.combination[0].isBright ? "black" : "white",
-          },
-        ]}
+        style={[styles.button, { borderColor: isBright ? "black" : "white" }]}
         onPress={() => setShowCopyFields(!showCopyFields)}
       >
-        <Text
-          style={{
-            color: combiData?.combination[0].isBright ? "black" : "white",
-          }}
-        >
+        <Text style={{ color: isBright ? "black" : "white" }}>
           {showCopyFields ? "Hide values" : "Show values"}
         </Text>
       </Pressable>
 
-      {combiData?.combination.map((color) => (
-        <View
-          key={color.hex}
-          style={[styles.singleColor, { backgroundColor: color.hex }]}
-        >
-          {showCopyFields && <CopyFields colorData={color} />}
-        </View>
-      ))}
+      <View style={[styles.colorBox, { backgroundColor: hex }]}>
+        {showCopyFields && <CopyFields colorData={colorObject} />}
+      </View>
+
+      <CombinationsList
+        type="colorDetailPage"
+        combinations={combinationArray.filter((c) =>
+          combinations.includes(c.id)
+        )}
+      />
     </View>
   );
 }
@@ -69,7 +62,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     paddingVertical: 5,
   },
-  singleColor: {
-    flex: 1,
+  colorBox: {
+    flex: 0.4,
   },
 });

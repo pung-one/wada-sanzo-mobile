@@ -1,10 +1,11 @@
-import { FlatList, Pressable, StyleSheet, View } from "react-native";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { colorsWithSlug } from "../../assets/colors";
 import { createCombinationArray } from "../../utils/helper";
 import { Combination } from "../../components/Combination";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { CombinationsFilter } from "../../components/CombinationsFilter";
+import { CombinationsList } from "../../components/CombinationsList";
 
 const combinationArrayAll = createCombinationArray(colorsWithSlug);
 
@@ -23,29 +24,27 @@ const combinationsMap = {
 
 export function CombinationsScreen() {
   const [filter, setFilter] = useState<1 | 2 | 3 | 4>(1);
-  const { navigate } = useNavigation();
 
   return (
     <View style={styles.root}>
+      <Text style={styles.title}>A Dictionary of Color Combinations</Text>
       <CombinationsFilter filter={filter} setFilter={setFilter} />
 
-      <FlatList
-        data={combinationsMap[filter]}
-        keyExtractor={(c) => c.id.toString()}
-        renderItem={({ item, index }) => (
-          <Pressable
-            onPress={() => navigate("CombinationDetail", { index: index })}
-          >
-            <Combination combinationData={item} />
-          </Pressable>
-        )}
-      />
+      <CombinationsList type="screen" combinations={combinationsMap[filter]} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   root: {
+    position: "relative",
+    flex: 1,
     backgroundColor: "white",
+  },
+  title: {
+    position: "absolute",
+    zIndex: 1,
+    top: 70,
+    left: 20,
   },
 });

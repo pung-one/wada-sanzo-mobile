@@ -88,9 +88,11 @@ export function CombinationsFilter({ filter, setFilter }: Props) {
 
 const styles = StyleSheet.create({
   root: {
-    position: "static",
+    position: "absolute",
+    zIndex: 1,
+    bottom: 0,
     flexDirection: "row",
-    paddingTop: 10,
+    paddingTop: 15,
     paddingHorizontal: 10,
     paddingBottom: 10,
     gap: 10,
@@ -101,7 +103,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderWidth: 1,
     borderColor: "black",
-    borderRadius: 8,
+    borderRadius: 10,
     overflow: "hidden",
     gap: 1,
   },
