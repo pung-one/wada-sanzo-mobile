@@ -13,12 +13,28 @@ import {
   StaticParamList,
 } from "@react-navigation/native";
 import { CombinationDetail } from "./src/screens/combinations/CombinationDetail";
+import { ColorScreen } from "./src/screens/colors/ColorScreen";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-const RootStack = createNativeStackNavigator({
-  initialRouteName: "Combinations",
+const BottomTabNavigator = createBottomTabNavigator({
   screens: {
     Combinations: CombinationsScreen,
+    Colors: ColorScreen,
+  },
+});
+
+const RootStack = createNativeStackNavigator({
+  initialRouteName: "MainTabs",
+  screens: {
+    MainTabs: {
+      screen: BottomTabNavigator,
+      options: {
+        headerShown: false,
+        title: "",
+      },
+    },
     CombinationDetail: CombinationDetail,
+    ColorDetail: CombinationDetail,
   },
 });
 
@@ -30,7 +46,7 @@ declare global {
   }
 }
 
-const Navigation = createStaticNavigation(RootStack);
+const RootNavigator = createStaticNavigation(RootStack);
 
 export default function App(): React.JSX.Element {
   /*
@@ -42,7 +58,6 @@ export default function App(): React.JSX.Element {
    * You can read more about it here:
    * https://github.com/react-native-community/discussions-and-proposals/discussions/827
    */
-  const safePadding = "5%";
 
-  return <Navigation />;
+  return <RootNavigator />;
 }
