@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     marginTop: -15,
     alignSelf: "center",
     padding: 5,
-    borderRadius: 8,
+    borderRadius: 10,
   },
   modalText: {
     lineHeight: 20,

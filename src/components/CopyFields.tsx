@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     maxHeight: 50,
     minHeight: 40,
     justifyContent: "center",
-    borderRadius: 8,
+    borderRadius: 10,
   },
   label: {
     textAlign: "center",

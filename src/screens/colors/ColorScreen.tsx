@@ -5,7 +5,6 @@ import { Combination } from "../../components/Combination";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { CombinationsFilter } from "../../components/CombinationsFilter";
-import { CombinationsList } from "../../components/CombinationsList";
 
 const combinationArrayAll = createCombinationArray(colorsWithSlug);
 
@@ -22,15 +21,33 @@ const combinationsMap = {
   ),
 };
 
-export function CombinationsScreen() {
+export function ColorScreen() {
   const [filter, setFilter] = useState<1 | 2 | 3 | 4>(1);
+  const { navigate } = useNavigation();
 
   return (
     <View style={styles.root}>
       <Text style={styles.title}>A Dictionary of Color Combinations</Text>
-      <CombinationsFilter filter={filter} setFilter={setFilter} />
 
-      <CombinationsList type="screen" combinations={combinationsMap[filter]} />
+      <FlatList
+        style={{ paddingTop: 110 }}
+        data={colorsWithSlug}
+        keyExtractor={(c) => c.slug}
+        renderItem={({ item, index }) => (
+          <Pressable onPress={() => navigate("ColorDetail", { index: index })}>
+            <View style={[styles.colorElement, { backgroundColor: item.hex }]}>
+              <Text
+                style={[
+                  styles.colorName,
+                  { color: item.isBright ? "black" : "white" },
+                ]}
+              >
+                {item.name}
+              </Text>
+            </View>
+          </Pressable>
+        )}
+      />
     </View>
   );
 }
@@ -46,5 +63,15 @@ const styles = StyleSheet.create({
     zIndex: 1,
     top: 70,
     left: 20,
+  },
+  colorElement: {
+    flex: 1,
+    height: 200,
+    marginBottom: 20,
+  },
+  colorName: {
+    paddingTop: 20,
+    paddingLeft: 20,
+    fontSize: 16,
   },
 });
